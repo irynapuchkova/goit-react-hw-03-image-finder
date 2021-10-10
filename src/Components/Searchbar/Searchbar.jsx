@@ -1,26 +1,33 @@
+// import PropTypes from 'prop-types';
 import {
   SearchbarHeader,
-  SearchForm,
-  SearchFormButton,
-  SearchFormButtonLabel,
-  SearchFormInput,
+  Form,
+  Button,
+  ButtonLabel,
+  Input,
 } from './Searchbar.styled';
 
 export default function Searchbar({ onSubmit }) {
+  const handleSubmit = e => {
+    e.preventDefault();
+    onSubmit(e.target.elements.inputValue.value);
+  };
+
   return (
     <SearchbarHeader>
-      <SearchForm>
-        <SearchFormButton type="submit">
-          <SearchFormButtonLabel>Search</SearchFormButtonLabel>
-        </SearchFormButton>
+      <Form onSubmit={handleSubmit}>
+        <Button type="submit">
+          <ButtonLabel>Search</ButtonLabel>
+        </Button>
 
-        <SearchFormInput
+        <Input
           type="text"
+          name="inputValue"
           autocomplete="off"
-          autofocus
+          autoFocus
           placeholder="Search images and photos"
         />
-      </SearchForm>
+      </Form>
     </SearchbarHeader>
   );
 }

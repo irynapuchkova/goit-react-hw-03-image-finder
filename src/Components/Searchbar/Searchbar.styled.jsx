@@ -19,7 +19,7 @@ export const SearchbarHeader = styled.div`
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 `;
 
-export const SearchForm = styled.form`
+export const Form = styled.form`
   display: flex;
   align-items: center;
   width: 100%;
@@ -29,7 +29,7 @@ export const SearchForm = styled.form`
   overflow: hidden;
 `;
 
-export const SearchFormButton = styled.button`
+export const Button = styled.button`
   display: inline-block;
   width: 48px;
   height: 48px;
@@ -48,7 +48,7 @@ export const SearchFormButton = styled.button`
   }
 `;
 
-export const SearchFormButtonLabel = styled.label`
+export const ButtonLabel = styled.label`
   position: absolute;
   width: 1px;
   height: 1px;
@@ -60,7 +60,7 @@ export const SearchFormButtonLabel = styled.label`
   border: 0;
 `;
 
-export const SearchFormInput = styled.input`
+export const Input = styled.input`
   display: inline-block;
   width: 100%;
   font: inherit;
