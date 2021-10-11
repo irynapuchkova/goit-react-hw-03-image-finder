@@ -20,7 +20,6 @@ export default class App extends Component {
   state = {
     inputValue: '',
     images: [],
-    loading: false,
     page: 1,
     selectedImg: null,
     reqStatus: 'idle',

@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {
   SearchbarHeader,
   Form,
@@ -31,3 +31,7 @@ export default function Searchbar({ onSubmit }) {
     </SearchbarHeader>
   );
 }
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

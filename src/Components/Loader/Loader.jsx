@@ -1,5 +1,3 @@
-// import PropTypes from 'prop-types';
-
 import Loader from 'react-loader-spinner';
 
 export default function LoaderSpinner() {
