@@ -11,11 +11,6 @@ import BtnLoadMore from '../Components/Button';
 import Modal from '../Components/Modal/Modal';
 import Loader from '../Components/Loader/Loader';
 
-window.scrollTo({
-  top: document.documentElement.scrollHeight,
-  behavior: 'smooth',
-});
-
 export default class App extends Component {
   state = {
     inputValue: '',
@@ -26,9 +21,14 @@ export default class App extends Component {
   };
 
   async componentDidUpdate(_, prevState) {
-    const { inputValue, page } = this.state;
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
 
-    if (this.state.inputValue.trim() === '') {
+    const { page, inputValue } = this.state;
+
+    if (inputValue.trim() === '') {
       return toast('PlEASE ENTER YOUR QUERY', {
         autoClose: 2000,
       });
@@ -36,27 +36,33 @@ export default class App extends Component {
 
     if (prevState.inputValue !== inputValue) {
       try {
-        this.setState({ reqStatus: 'pending', images: [], page: 1 });
-        const results = await fetchInfo(inputValue, page);
+        this.setState({ reqStatus: 'pending' });
+        const results = await fetchInfo(1, inputValue);
         const images = results.hits;
+        this.setState({ reqStatus: 'resolved' });
+        this.setState(prevState => ({
+          images: [...images],
+        }));
 
-        this.setState({ images });
         if (images.length === 0) {
           return toast('THERE IS NO IMAGES ON QUERY. TRY AGAIN', {
             autoClose: 2000,
           });
         }
-        this.setState({ reqStatus: 'resolved' });
       } catch (error) {
         this.setState({ reqStatus: 'rejected' });
         console.error(error.message);
       }
     }
 
-    if (prevState.page !== page && prevState.inputValue === inputValue) {
+    if (
+      prevState.page !== page &&
+      prevState.inputValue === inputValue &&
+      page !== 1
+    ) {
       try {
         this.setState({ reqStatus: 'pending' });
-        const results = await fetchInfo(inputValue, page);
+        const results = await fetchInfo(page, inputValue);
         const images = results.hits;
         this.setState({ reqStatus: 'resolved' });
         this.setState(prevState => ({
@@ -96,10 +102,7 @@ export default class App extends Component {
           <Searchbar onSubmit={this.handleSearchbarSubmit} />
         </Container>
         {reqStatus === 'pending' && <Loader />}
-        <ImageGallery
-          data={images}
-          onSelect={this.onSelectedImg}
-        ></ImageGallery>
+        <ImageGallery data={images} onSelect={this.onSelectedImg} />
         {showBtnLoadMore && <BtnLoadMore onClick={this.loadMore} />}
         <ToastContainer role="alert" />
         {selectedImg && (
