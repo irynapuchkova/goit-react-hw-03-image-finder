@@ -40,9 +40,7 @@ export default class App extends Component {
         const results = await fetchInfo(1, inputValue);
         const images = results.hits;
         this.setState({ reqStatus: 'resolved' });
-        this.setState(prevState => ({
-          images: [...images],
-        }));
+        this.setState(prevState => ({ page: 1, images: [...images] }));
 
         if (images.length === 0) {
           return toast('THERE IS NO IMAGES ON QUERY. TRY AGAIN', {
